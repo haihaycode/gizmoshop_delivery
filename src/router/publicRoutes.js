@@ -11,7 +11,7 @@ const publicRoutes = [
             {
                 path: '',
                 meta: {
-                    title: "Tên routes ",
+                    title: "Gizmo",
                     description: " Mô tả "
                 },
                 components: {
