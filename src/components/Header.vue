@@ -1,99 +1,209 @@
 <template>
-    <div>
-        <header class="bg-gradient-to-r from-green-600 to-blue-800 text-white shadow-lg">
-            <div class="container mx-auto flex items-center justify-between py-4 px-6">
-                <!-- Logo/Title -->
-                <h1 class="text-2xl font-mono">GizmoShop - Nhân viên giao hàng</h1>
+  <div>
+    <header
+      class="bg-gradient-to-r from-green-600 to-blue-800 text-white shadow-lg"
+    >
+      <div
+        class="container mx-auto flex items-center justify-between py-4 px-6"
+      >
+        <!-- Logo/Title -->
+        <h1 class="text-2xl font-mono">GizmoShop - Nhân viên giao hàng</h1>
 
-                <!-- Mobile Menu Button -->
-                <button @click="toggleMenu" class="block md:hidden text-white focus:outline-none">
-                    <!-- Hiển thị SVG "Menu" khi isMenuOpen = false -->
-                    <svg v-if="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
+        <!-- Mobile Menu Button -->
+        <button
+          @click="toggleMenu"
+          class="block md:hidden text-white focus:outline-none"
+        >
+          <!-- Hiển thị SVG "Menu" khi isMenuOpen = false -->
+          <svg
+            v-if="!isMenuOpen"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
 
-                    <!-- Hiển thị SVG "X" khi isMenuOpen = true -->
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+          <!-- Hiển thị SVG "X" khi isMenuOpen = true -->
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-4">
-                    <a href="/supplier-home" :class="{ 'underline': currentRoute === '/supplier-home' }"
-                        class="hover:underline">Trang chủ</a>
-                    <a href="/contact-us" :class="{ 'underline': currentRoute === '/contact-us' }"
-                        class="hover:underline">Liên hệ</a>
-                    <a href="/about-us" :class="{ 'underline': currentRoute === '/about-us' }"
-                        class="hover:underline">Giới Thiệu</a>
-                </nav>
-            </div>
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-2">
+          <!-- Ảnh đại diện -->
+          <img
+            src="https://via.placeholder.com/40"
+            alt="Avatar"
+            class="w-8 h-8 rounded-full border-2 border-white hover:border-blue-500 transition-all duration-300"
+          />
 
-            <!-- Mobile Dropdown Navigation -->
-            <div id="mobileMenu"
-                class="hidden md:hidden bg-blue-700 text-white space-y-2 px-6 py-4 transition-all duration-300">
-                <a href="/supplier-home" class="block hover:underline">Trang chủ</a>
-                <a href="/contact-us" class="block hover:underline">Liên hệ</a>
-                <a href="/about-us" class="block hover:underline">Giới Thiệu</a>
-            </div>
-        </header>
-
-        <!-- mobile header -->
-        <nav
-            class="fixed inset-x-0 bottom-0 bg-white border-t shadow-lg md:hidden flex justify-around py-3 items-center">
-            <a href="/supplier-home" :class="{ 'text-blue-600': currentRoute === '/supplier-home' }"
-                class="flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18M3 6h18" />
-                </svg>
-                <span class="text-xs">Home</span>
-            </a>
-            <a href="/search" class="flex flex-col items-center text-gray-500 hover:text-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5.121 17.804A6 6 0 1118.878 6.196a6 6 0 01-13.757 0z" />
-                </svg>
-                <span class="text-xs">Search</span>
-            </a>
-            <a href="/notifications" class="flex flex-col items-center text-gray-500 hover:text-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 10l4.553 7.599L9 17M4 6h16m-8 8l-4.553-7.599" />
-                </svg>
-                <span class="text-xs">Notifications</span>
-            </a>
-            <a href="/profile" class="flex flex-col items-center text-gray-500 hover:text-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 14l2-2-2-2m0 0l-2 2m2-2v8m0 4v-4m0-8V4m0-2v2m0-2V2" />
-                </svg>
-                <span class="text-xs">Profile</span>
-            </a>
+          <div>
+            <!-- Tên người dùng -->
+            <p class="text-sm font-semibold">{{ infoAccount.fullname }}</p>
+            <!-- Vai trò người dùng -->
+            <p class="text-xs text-gray-400">{{ infoAccount.email }}</p>
+          </div>
         </nav>
-    </div>
+      </div>
+
+      <!-- Mobile Dropdown Navigation -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-blue-700 text-white space-y-2 px-6 py-4 transition-all duration-300"
+      >
+        <a href="/supplier-home" class="block hover:underline">Trang chủ</a>
+        <a href="/contact-us" class="block hover:underline">Liên hệ</a>
+        <a href="/about-us" class="block hover:underline">Giới Thiệu</a>
+      </div>
+    </header>
+
+    <nav
+      class="fixed inset-x-0 bottom-0 bg-white border-t shadow-lg md:hidden flex justify-around py-3 items-center"
+    >
+      <div
+        class="fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-between px-4 py-3 md:max-w-lg md:mx-auto items-center rounded-t-lg"
+        style="z-index: 1000"
+      >
+        <!-- Home Icon -->
+        <router-link to="/">
+          <button
+            class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
+          >
+            <i class="bx bx-home text-2xl md:text-3xl hover:text-green-600"></i>
+          </button>
+        </router-link>
+
+        <!-- Orders Icon -->
+        <router-link to="/list">
+          <button
+            class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
+          >
+            <i
+              class="bx bx-package text-2xl md:text-3xl hover:text-green-600"
+            ></i>
+          </button>
+        </router-link>
+
+        <!-- Transaction History Icon -->
+        <router-link to="/history">
+          <button
+            class="icon w-12 h-12 flex items-center bg-gray-100 justify-center transition-all duration-200 hover:bg-gray-100"
+          >
+            <i
+              class="bx bx-history text-2xl md:text-3xl hover:text-green-600"
+            ></i>
+          </button>
+        </router-link>
+
+        <!-- Profile Icon -->
+        <router-link to="/profile">
+          <button
+            class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
+          >
+            <i class="bx bx-user text-2xl md:text-3xl hover:text-green-600"></i>
+          </button>
+        </router-link>
+        <!-- Logout Icon -->
+        <button
+          class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
+        >
+          <i
+            class="bx bx-log-out text-2xl md:text-3xl hover:text-green-600"
+          ></i>
+        </button>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
+import { getinfo } from "@/api/auth/meApi";
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: "HeaderComponent",
-    data() {
-        return {
-            isMenuOpen: false,
-            currentRoute: window.location.pathname, // Detect current route
-        };
+  name: "HeaderComponent",
+  data() {
+    return {
+      infoAccount: {
+        fullname: "",
+
+        roles: [""],
+      },
+      isMenuOpen: false,
+      currentRoute: window.location.pathname,
+    };
+  },
+  methods: {
+    async fetchAccountInfo() {
+      try {
+        const response = await getinfo();
+        this.infoAccount = response.data;
+        console.log(this.infoAccount);
+        return this.infoAccount;
+      } catch (error) {
+        console.error(error);
+      }
     },
-    methods: {
-        toggleMenu() {
-            this.isMenuOpen = !this.isMenuOpen;
-        },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
     },
+    ...mapActions("auth", ["logout"]),
+  },
+  created() {
+    this.fetchAccountInfo();
+  },
+  computed: {
+    ...mapGetters("auth", ["token", "user", "name", "role"]),
+  },
 };
 </script>
+<style scoped>
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Modern hover effect */
+.icon:hover {
+  transform: scale(1.15);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  background-color: #f0f0f0;
+}
+
+/* Underline on hover */
+.icon:hover::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  /* Position the underline slightly above the button */
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #1eab16;
+  /* Custom color */
+}
+</style>

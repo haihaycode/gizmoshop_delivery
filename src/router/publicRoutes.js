@@ -1,4 +1,4 @@
-const useComponent = component => () => import(`../view/${component}.vue`);
+const useComponent = component => () => import(`../view/pages/${component}.vue`);
 // import Header from '@/components/Header.vue';
 // import Footer from '@/components/Footer.vue';
 import client from '@/view/client.vue';
@@ -15,9 +15,8 @@ const publicRoutes = [
                     description: " Mô tả "
                 },
                 components: {
-                    default: useComponent('test'),
-                    // header: Header,
-                    // footer: Footer
+                    default: useComponent('login'),
+              
                 }
 
             },

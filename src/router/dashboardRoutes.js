@@ -16,13 +16,84 @@ const dashboardRoutes = [
                     description: "GizmoShop"
                 },
                 components: {
-                    default: useComponent('test'),
+                    default: useComponent('yourDelivery'),
                     header: Header,
                     footer: Footer,
                     SideBar: SideBar,
                 }
 
             },
+            {
+                path: '/list',
+                meta: {
+                    title: "Giao hàng",
+                    description: "GizmoShop"
+                },
+                components: {
+                    default: useComponent('deliveryList'),
+                    header: Header,
+                    footer: Footer,
+                    SideBar: SideBar,
+                }
+
+            },
+            {
+                path: '/supplier-list',
+                meta: {
+                    title: "Giao hàng",
+                    description: "GizmoShop"
+                },
+                components: {
+                    default: useComponent('supplierDelivery'),
+                    header: Header,
+                    footer: Footer,
+                    SideBar: SideBar,
+                }
+
+            },
+            {
+                path: '/detailDelivery',
+                meta: {
+                    title: "Giao hàng",
+                    description: "GizmoShop"
+                },
+                components: {
+                    default: useComponent('deliveryDetail'),
+                    header: Header,
+                    footer: Footer,
+                    SideBar: SideBar,
+                }
+
+            },
+            {
+                path: '/profile',
+                meta: {
+                    title: "Giao hàng",
+                    description: "GizmoShop"
+                },
+                components: {
+                    default: useComponent('profile'),
+                    header: Header,
+                    footer: Footer,
+                    SideBar: SideBar,
+                }
+
+            },
+            {
+                path: '/history',
+                meta: {
+                    title: "Giao hàng",
+                    description: "GizmoShop"
+                },
+                components: {
+                    default: useComponent('statisticsOrder'),
+                    header: Header,
+                    footer: Footer,
+                    SideBar: SideBar,
+                }
+
+            },
+
 
         ]
     },
