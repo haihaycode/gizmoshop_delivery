@@ -53,7 +53,7 @@
         <nav class="hidden md:flex items-center space-x-2">
           <!-- Ảnh đại diện -->
           <img
-            src="https://via.placeholder.com/40"
+            src="https://i.pinimg.com/736x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg"
             alt="Avatar"
             class="w-8 h-8 rounded-full border-2 border-white hover:border-blue-500 transition-all duration-300"
           />

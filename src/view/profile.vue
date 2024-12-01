@@ -16,27 +16,15 @@
             <!-- Avatar Image -->
             <div
               class="relative w-32 h-32 mx-auto rounded-full border-4 border-gray-300 overflow-hidden group cursor-pointer"
-              @click="openModalphoto"
             >
               <img
-                :src="avatarUrl"
+                src="https://i.pinimg.com/736x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg"
                 alt="Avatar"
                 class="w-full h-full object-cover rounded-full transition-transform duration-300 ease-in-out group-hover:scale-110"
               />
               <div
                 class="absolute inset-0 rounded-full border-4 border-green-300 group-hover:border-green-500 transition-colors duration-300 ease-in-out"
               ></div>
-            </div>
-
-            <!-- Modal -->
-            <div
-              v-if="showModalPhoto"
-              class="fixed inset-0 bg-gray-400 bg-opacity-50 flex items-center justify-center z-50"
-            >
-              <showModalPhoto
-                :infoAccount="infoAccount"
-                :closeUpdateForm="closeModalphoto"
-              />
             </div>
           </div>
           <p
@@ -130,47 +118,7 @@
         </div>
       </div>
     </div>
-    <!-- Thông tin đơn hàng -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
-        Thông tin đơn hàng
-      </h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- Số lượng đơn đã nhận -->
-        <div
-          class="flex flex-col items-center bg-blue-50 p-6 rounded-lg shadow-md transform hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out"
-        >
-          <p class="text-lg font-semibold text-blue-700">
-            Số lượng đơn đã nhận
-          </p>
-          <p class="text-3xl font-bold text-blue-900">
-            {{ totalOrdersReceived }}
-          </p>
-        </div>
 
-        <!-- Số lượng đơn đã giao -->
-        <div
-          class="flex flex-col items-center bg-green-50 p-6 rounded-lg shadow-md transform hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out"
-        >
-          <p class="text-lg font-semibold text-green-700">
-            Số lượng đơn đã giao
-          </p>
-          <p class="text-3xl font-bold text-green-900">
-            {{ totalOrdersDelivered }}
-          </p>
-        </div>
-
-        <!-- Số lượng đơn đã hủy -->
-        <div
-          class="flex flex-col items-center bg-red-50 p-6 rounded-lg shadow-md transform hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out"
-        >
-          <p class="text-lg font-semibold text-red-700">Số lượng đơn đã hủy</p>
-          <p class="text-3xl font-bold text-red-900">
-            {{ totalOrdersCancelled }}
-          </p>
-        </div>
-      </div>
-    </div>
     <div
       v-if="showUpdateForm"
       class="fixed inset-0 bg-gray-400 bg-opacity-50 flex items-center justify-center z-50"
@@ -202,14 +150,13 @@ import { getinfo, updateMe } from "@/api/auth/meApi";
 import * as Yup from "yup";
 import NotificationModal from "@/components/containers/modal/NotificationModal.vue";
 import UpdateForm from "@/components/profile/modalUpdate.vue";
-import showModalPhoto from "@/components/profile/modalUpdatePhoto.vue";
+
 export default {
-  components: { NotificationModal, UpdateForm, showModalPhoto },
+  components: { NotificationModal, UpdateForm },
   data() {
     return {
       NotificationModalIsOpen: false,
       showUpdateForm: false,
-      showModalPhoto: false,
 
       infoAccount: {
         email: "",
@@ -224,9 +171,6 @@ export default {
       errors: {},
       messageType: "",
       message: "",
-      totalOrdersReceived: 45,
-      totalOrdersDelivered: 30,
-      totalOrdersCancelled: 5,
     };
   },
   computed: {
@@ -256,12 +200,6 @@ export default {
     },
   },
   methods: {
-    openModalphoto() {
-      this.showModalPhoto = true;
-    },
-    closeModalphoto() {
-      this.showModalPhoto = false;
-    },
     validateForm() {
       this.errors = {};
       const schema = Yup.object().shape({

@@ -27,32 +27,11 @@
       <listOrder :orders="orders" @selectOrder="selectOrder"></listOrder>
 
       <!-- Pagination Controls -->
-      <div class="flex items-center justify-center mt-6 space-x-4">
-        <!-- Nút trước -->
-        <button
-          @click="changePage(page - 1)"
-          :disabled="page <= 0"
-          class="flex items-center px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
-        >
-          <i class="bx bx-chevron-left text-xl"></i>
-          <span class="ml-2">Trước</span>
-        </button>
-
-        <!-- Hiển thị số trang -->
-        <div class="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-md">
-          Trang {{ page + 1 }} / {{ totalPages }}
-        </div>
-
-        <!-- Nút tiếp -->
-        <button
-          @click="changePage(page + 1)"
-          :disabled="page >= totalPages - 1"
-          class="flex items-center px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
-        >
-          <span class="mr-2">Tiếp</span>
-          <i class="bx bx-chevron-right text-xl"></i>
-        </button>
-      </div>
+      <PaginationV2Vue
+        :currentPage="page"
+        :totalPages="totalPages"
+        @change-page="changePage"
+      />
 
       <orderDetail
         v-if="selectedOrder"
@@ -73,9 +52,10 @@ import listOrder from "@/components/home/listOrder.vue";
 import orderDetail from "@/components/history/orderDetail.vue";
 import { getOrdersforShipper } from "@/api/deliveryApi";
 import deliveryDetailVue from "@/components/history/deliveryDetail.vue";
+import PaginationV2Vue from "@/components/containers/pagination/PaginationV2.vue";
 
 export default {
-  components: { listOrder, orderDetail, deliveryDetailVue },
+  components: { listOrder, PaginationV2Vue, orderDetail, deliveryDetailVue },
   data() {
     return {
       isLoading: false,
@@ -96,7 +76,7 @@ export default {
       this.isLoading = true;
       try {
         const response = await getOrdersforShipper(
-          "DA_GIAO",
+          "DA_NHAN_VA_GIAO_THANH_CONG",
           this.page,
           this.limit
         );
