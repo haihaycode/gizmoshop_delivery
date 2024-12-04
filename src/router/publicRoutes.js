@@ -6,21 +6,21 @@ const publicRoutes = [
     {
         path: '/login',
         component: client,
-        children: [
 
+        children: [
             {
                 path: '',
+                name: 'login',
                 meta: {
                     title: "Gizmo",
                     description: " Mô tả "
                 },
                 components: {
                     default: useComponent('login'),
-              
+
                 }
 
             },
-
         ]
     },
 ];

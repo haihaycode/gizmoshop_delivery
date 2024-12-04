@@ -1,16 +1,9 @@
 <template>
   <div>
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex justify-center items-center z-50 bg-opacity-20 bg-gray-800"
-    >
-      <div
-        class="absolute animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-green-500"
-      ></div>
-      <img
-        src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
-        class="rounded-full h-20 w-20 opacity-80"
-      />
+    <div v-if="isLoading" class="fixed inset-0 flex justify-center items-center z-50 bg-opacity-20 bg-gray-800">
+      <div class="absolute animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-green-500"></div>
+      <img src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
+        class="rounded-full h-20 w-20 opacity-80" />
     </div>
 
     <div class="p-4 bg-gray-100 min-h-screen" v-if="!isModalOrderDetailView">
@@ -26,28 +19,14 @@
       <!-- Component ListOrder -->
       <listOrder :orders="orders" @selectOrder="selectOrder"></listOrder>
 
-      <orderDetail
-        v-if="selectedOrder"
-        :order="selectedOrder"
-        @closeDetail="closeDetail"
-        @confirmDelivery="confirmDelivery"
-        @openCancelForm="openCancelForm"
-      ></orderDetail>
+      <orderDetail v-if="selectedOrder" :order="selectedOrder" @closeDetail="closeDetail"
+        @confirmDelivery="confirmDelivery" @openCancelForm="openCancelForm"></orderDetail>
 
-      <cancelOrder
-        v-if="showCancelForm"
-        :selectedOrder="selectedOrder"
-        :showCancelForm="showCancelForm"
-        @closeCancelForm="closeCancelForm"
-        @cancelOrder="processCancelOrder"
-      />
+      <cancelOrder v-if="showCancelForm" :selectedOrder="selectedOrder" :showCancelForm="showCancelForm"
+        @closeCancelForm="closeCancelForm" @cancelOrder="processCancelOrder" />
 
       <!-- Component phân trang -->
-      <PaginationV2Vue
-        :currentPage="page"
-        :totalPages="totalPages"
-        @change-page="changePage"
-      />
+      <PaginationV2Vue :currentPage="page" :totalPages="totalPages" @change-page="changePage" />
     </div>
     <div v-else>
       <deliveryDetailVue :order="orderDetailSelected" />
@@ -95,6 +74,13 @@ export default {
           this.limit
         );
         this.orders = response.data.content;
+        this.orders.forEach(order => {
+          order.orderDetails = order.orderDetails.filter(orderDetail => {
+            return orderDetail.product.productStatusResponse.id !== 3;
+          });
+        });
+
+
         this.totalPages = response.data.totalPages; // Cập nhật tổng số trang
       } catch (error) {
         console.error("Lỗi khi lấy danh sách đơn hàng:", error);
@@ -105,8 +91,7 @@ export default {
     processCancelOrder(cancelData) {
       console.log("Dữ liệu hủy:", cancelData);
       alert(
-        `Hủy đơn ${cancelData.orderId} với lý do: ${cancelData.reason}${
-          cancelData.image ? " (đã tải ảnh)" : ""
+        `Hủy đơn ${cancelData.orderId} với lý do: ${cancelData.reason}${cancelData.image ? " (đã tải ảnh)" : ""
         }`
       );
     },
