@@ -11,7 +11,7 @@
         'border border-green-300 ': !order.orderStatus.roleStatus, // Nếu roleStatus là false
         'border border-yellow-300 ': order.orderStatus.roleStatus, // Nếu roleStatus là true
       }"
-      class="bg-white shadow-md rounded-lg flex items-center p-4 hover:shadow-lg transition-transform transform hover:scale-105"
+      class="bg-white shadow-md rounded-lg flex items-center p-4 hover:shadow-lg transition-transform transform hover:scale-100"
     >
       <!-- Icon tình trạng -->
       <div

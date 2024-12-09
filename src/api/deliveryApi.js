@@ -15,14 +15,41 @@ export const getOrders = async (queryType) => {
     throw error;
   }
 };
-export const getOrdersforShipper = async (queryType) => {
+// export const getOrdersforShipper = async (queryType) => {
+//   try {
+//     const response = await Axios.get(
+//       `${HOST}/api/public/t/delivery/get-all-received-orders`,
+//       {
+//         params: { type: queryType }, // Truyền query parameter
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.error("Lỗi khi gọi API:", error);
+//     throw error;
+//   }
+// };
+export const getOrdersforShipper = async (
+  queryType,
+  page = 0,
+  limit = 5,
+  keyword = "",
+  startDate = null,
+  endDate = null,
+  sort = "id,DESC"
+) => {
   try {
-    const response = await Axios.get(
-      `${HOST}/api/public/t/delivery/get-all-received-orders`,
-      {
-        params: { type: queryType }, // Truyền query parameter
-      }
-    );
+    const response = await Axios.get(`${HOST}/api/public/t/delivery/get-all-received-orders`, {
+      params: {
+        type: queryType,
+        page,
+        limit,
+        keyword,
+        startDate,
+        endDate,
+        sort,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Lỗi khi gọi API:", error);
