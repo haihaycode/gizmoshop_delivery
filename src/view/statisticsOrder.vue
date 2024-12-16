@@ -13,30 +13,23 @@
       <div
         class="filters mb-4 flex flex-wrap gap-2 items-center justify-center"
       >
-        <!-- Chú thích cho ô tìm kiếm -->
-
-        <div class="filters mb-6 flex flex-wrap gap-4 justify-center">
-          <!-- Chú thích cho ô tìm kiếm -->
-          <div class="w-full sm:w-1/2 md:w-1/3 text-center">
-            <label
-              for="searchInput"
-              class="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Tìm kiếm theo mã đơn hàng:
-            </label>
-            <input
-              id="searchInput"
-              type="text"
-              class="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              v-model="searchKeyword"
-              placeholder="Nhập mã đơn hàng..."
-              @input="fetchOrders"
-            />
-          </div>
+        <div class="w-full sm:w-1/2 md:w-1/3 text-center">
+          <label
+            for="searchInput"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Tìm kiếm theo mã đơn hàng:
+          </label>
+          <input
+            id="searchInput"
+            type="text"
+            class="border rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            v-model="searchKeyword"
+            placeholder="Nhập mã đơn hàng..."
+            @input="fetchOrders"
+          />
         </div>
 
-        <!-- Danh sách đơn hàng -->
-        <!-- Chú thích cho dropdown sắp xếp -->
         <div class="w-full sm:w-1/2 md:w-1/3 text-center">
           <label
             for="sortSelect"
