@@ -96,8 +96,7 @@ export default {
     processCancelOrder(cancelData) {
       console.log("Dữ liệu hủy:", cancelData);
       alert(
-        `Hủy đơn ${cancelData.orderId} với lý do: ${cancelData.reason}${
-          cancelData.image ? " (đã tải ảnh)" : ""
+        `Hủy đơn ${cancelData.orderId} với lý do: ${cancelData.reason}${cancelData.image ? " (đã tải ảnh)" : ""
         }`
       );
     },
@@ -139,3 +138,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

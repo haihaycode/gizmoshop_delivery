@@ -33,18 +33,20 @@
             <i
               class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
               @click="togglePassword"
-              :class="{
-                'bx bx-hide': passwordType === 'password',
-                'bx bx-show': passwordType !== 'password',
-              }"
+              :class="passwordType === 'password' ? 'bx bx-hide' : 'bx bx-show'"
             ></i>
           </div>
 
           <button
             :disabled="isLoading"
-            class="w-full py-3 text-white bg-green-600 rounded-lg font-semibold hover:bg-green-700 transition duration-200 shadow-lg disabled:bg-green-300"
+            class="w-full py-3 text-white bg-green-600 rounded-lg font-semibold hover:bg-green-700 transition duration-200 shadow-lg disabled:bg-green-300 flex items-center justify-center"
           >
-            Đăng nhập
+            <span
+              v-if="isLoading"
+              class="loader spinner-border w-4 h-4 mr-2"
+            ></span>
+            <span v-if="!isLoading">Đăng nhập</span>
+            <span v-else class="sr-only">Đang xử lý...</span>
           </button>
         </form>
 
@@ -112,12 +114,12 @@ export default {
   },
 
   components: {
-    // eslint-disable-next-line vue/no-unused-components
     NotificationModal,
   },
   methods: {
     ...mapActions("auth", ["setToken", "setRefreshToken"]),
     async handleLogin() {
+      this.isLoading = true;
       try {
         const loginData = {
           email: this.email,
@@ -126,13 +128,12 @@ export default {
         const response = await loginApi(loginData);
         const isAdmin = handleAuthentication(
           response.data.accessToken,
-          response.data.refreshToken,
-         
+          response.data.refreshToken
         );
         console.log("isAdmin:", isAdmin);
         this.messageType = isAdmin ? "success" : "warning";
         this.message = isAdmin ? response.message : "Không đủ quyền";
-        this.isModalOpen = true; 
+        this.isModalOpen = true;
         console.log("Modal state:", this.isModalOpen);
         if (isAdmin) {
           setTimeout(() => {
@@ -143,7 +144,9 @@ export default {
         console.error("Login error:", error); // Ghi log lỗi
         this.messageType = "error";
         this.message = "Đăng nhập thất bại. Vui lòng thử lại.";
-        this.isModalOpen = true; 
+        this.isModalOpen = true;
+      } finally {
+        this.isLoading = false;
       }
     },
     togglePassword() {
@@ -157,11 +160,28 @@ export default {
 };
 </script>
 
-<style scoped>
-.bx-hide:before {
+<style>
+::v-deep(.bx-hide):before {
   content: "\f460";
 }
-.bx-show:before {
+::v-deep(.bx-show):before {
   content: "\f46e";
+}
+.loader {
+  border: 2px solid #fff; /* Đường viền trắng */
+  border-top: 2px solid transparent; /* Phần trên trong suốt */
+  border-radius: 50%; /* Hình tròn */
+  width: 16px;
+  height: 16px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
