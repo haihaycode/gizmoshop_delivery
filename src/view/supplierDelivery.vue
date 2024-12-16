@@ -1,27 +1,6 @@
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex flex-col justify-center items-center z-50 bg-opacity-20 bg-gray-500"
-    >
-      <!-- Spinner với hình ảnh bên trong -->
-      <div class="relative flex items-center justify-center">
-        <!-- Vòng tròn xoay -->
-        <div
-          class="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-green-500"
-        ></div>
-        <!-- Ảnh GIF nằm bên trong -->
-        <img
-          src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
-          class="absolute rounded-full h-20 w-20"
-        />
-      </div>
-      <!-- Dòng chữ -->
-      <p class="text-white text-lg font-semibold mt-10">
-        Đang tải
-        <span class="dots"></span>
-      </p>
-    </div>
+    <loading-spinner v-if="isLoading" />
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
       Danh sách đơn hàng của nhà cung cấp
     </h2>
@@ -61,11 +40,13 @@
 import ListDelivery from "@/components/delivery/listDelivery.vue";
 import OrderModal from "@/components/delivery/detailDelivery.vue";
 import { getOrders, ReceiveAnOrder } from "@/api/deliveryApi";
+import LoadingSpinner from "@/components/containers/loading/LoadingShipper.vue";
 
 export default {
   components: {
     ListDelivery,
     OrderModal,
+    LoadingSpinner,
   },
   data() {
     return {

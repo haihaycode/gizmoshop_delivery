@@ -1,38 +1,67 @@
 <template>
   <div>
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex justify-center items-center z-50 bg-opacity-20 bg-gray-800"
-    >
-      <div
-        class="absolute animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-green-500"
-      ></div>
-      <img
-        src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
-        class="rounded-full h-20 w-20 opacity-80"
-      />
-    </div>
+    <loading-spinner v-if="isLoading" />
 
     <div class="p-4 bg-gray-100 min-h-screen" v-if="!isModalOrderDetailView">
       <h2 class="text-2xl font-bold text-gray-800 text-center">
         Lịch sử giao hàng
       </h2>
       <p class="text-sm text-gray-600 text-center mb-2">
-        <span class="text-green-500 font-semibold">Xanh</span>
-        người dùng, <span class="text-yellow-500 font-semibold">Vàng</span> nhà
-        cung cấp.
+        <span class="text-green-500 font-semibold">Xanh</span> người dùng,
+        <span class="text-yellow-500 font-semibold">Vàng</span> nhà cung cấp.
       </p>
+      <div
+        class="filters mb-4 flex flex-wrap gap-2 items-center justify-center"
+      >
+        <!-- Chú thích cho ô tìm kiếm -->
+        <div class="w-full md:w-auto text-center">
+          <label
+            for="searchInput"
+            class="block text-sm font-medium text-gray-700"
+          >
+            🔍 Tìm kiếm theo mã đơn hàng:
+          </label>
+          <input
+            id="searchInput"
+            type="text"
+            class="border rounded px-2 py-1 w-full md:w-auto"
+            v-model="searchKeyword"
+            placeholder="Nhập mã đơn hàng..."
+            @input="fetchOrders"
+          />
+        </div>
 
-      <!-- Component ListOrder -->
+        <!-- Chú thích cho dropdown sắp xếp -->
+        <div class="w-full md:w-auto text-center">
+          <label
+            for="sortSelect"
+            class="block text-sm font-medium text-gray-700"
+          >
+            📋 Sắp xếp theo:
+          </label>
+          <select
+            id="sortSelect"
+            v-model="sortOrder"
+            @change="fetchOrders"
+            class="border rounded px-2 py-1 w-full md:w-auto"
+          >
+            <option value="id,DESC">ID - Mới nhất</option>
+            <option value="id,ASC">ID - Cũ nhất</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Danh sách đơn hàng -->
       <listOrder :orders="orders" @selectOrder="selectOrder"></listOrder>
 
-      <!-- Pagination Controls -->
+      <!-- Điều hướng phân trang -->
       <PaginationV2Vue
         :currentPage="page"
         :totalPages="totalPages"
         @change-page="changePage"
       />
 
+      <!-- Chi tiết đơn hàng -->
       <orderDetail
         v-if="selectedOrder"
         :order="selectedOrder"
@@ -53,22 +82,31 @@ import orderDetail from "@/components/history/orderDetail.vue";
 import { getOrdersforShipper } from "@/api/deliveryApi";
 import deliveryDetailVue from "@/components/history/deliveryDetail.vue";
 import PaginationV2Vue from "@/components/containers/pagination/PaginationV2.vue";
+import LoadingSpinner from "@/components/containers/loading/LoadingShipper.vue";
 
 export default {
-  components: { listOrder, PaginationV2Vue, orderDetail, deliveryDetailVue },
+  components: {
+    listOrder,
+    PaginationV2Vue,
+    orderDetail,
+    deliveryDetailVue,
+    LoadingSpinner,
+  },
   data() {
     return {
       isLoading: false,
       isModalOrderDetailView: false,
-      orderDetailSelected: null,
-      getOrdersforShipper,
       orders: [],
       selectedOrder: null,
-      showCancelForm: false,
-      statusFilter: "",
-      page: 0, // current page
-      limit: 5, // items per page
-      totalPages: 0, // total number of pages
+      orderDetailSelected: null,
+      page: 0, // Trang hiện tại
+      limit: 5, // Số mục trên mỗi trang
+      totalPages: 0, // Tổng số trang
+      // Bộ lọc
+      searchKeyword: "",
+      startDate: null,
+      endDate: null,
+      sortOrder: "id,DESC", // Sắp xếp mặc định
     };
   },
   methods: {
@@ -78,23 +116,25 @@ export default {
         const response = await getOrdersforShipper(
           "DA_NHAN_VA_GIAO_THANH_CONG",
           this.page,
-          this.limit
+          this.limit,
+          this.searchKeyword,
+          this.startDate,
+          this.endDate,
+          this.sortOrder
         );
         this.orders = response.data.content;
-        this.totalPages = response.data.totalPages; // Update total pages
+        this.totalPages = response.data.totalPages;
       } catch (error) {
         console.error("Lỗi khi lấy danh sách đơn hàng:", error);
       } finally {
         this.isLoading = false;
       }
     },
-    processCancelOrder(cancelData) {
-      console.log("Dữ liệu hủy:", cancelData);
-      alert(
-        `Hủy đơn ${cancelData.orderId} với lý do: ${cancelData.reason}${
-          cancelData.image ? " (đã tải ảnh)" : ""
-        }`
-      );
+    changePage(newPage) {
+      if (newPage >= 0 && newPage < this.totalPages) {
+        this.page = newPage;
+        this.fetchOrders();
+      }
     },
     selectOrder(order) {
       this.selectedOrder = order;
@@ -117,15 +157,18 @@ export default {
     closeCancelForm() {
       this.showCancelForm = false;
     },
-    changePage(newPage) {
-      if (newPage >= 0 && newPage < this.totalPages) {
-        this.page = newPage;
-        this.fetchOrders(); // Fetch orders for the new page
-      }
-    },
   },
   created() {
     this.fetchOrders();
   },
 };
 </script>
+
+<style scoped>
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

@@ -1,18 +1,7 @@
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
     <!-- Hiển thị loading -->
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex justify-center items-center z-50 bg-opacity-20 bg-gray-800"
-    >
-      <div
-        class="absolute animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-green-500"
-      ></div>
-      <img
-        src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
-        class="rounded-full h-20 w-20 opacity-80"
-      />
-    </div>
+   <loading-spinner v-if="isLoading" />
 
     <!-- Tiêu đề -->
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -54,9 +43,10 @@
 import ListDelivery from "@/components/delivery/listDelivery.vue";
 import OrderModal from "@/components/delivery/detailDelivery.vue";
 import { getOrders, ReceiveAnOrder } from "@/api/deliveryApi";
+import LoadingSpinner from "@/components/containers/loading/LoadingShipper.vue";
 
 export default {
-  components: { ListDelivery, OrderModal },
+  components: { ListDelivery, OrderModal,LoadingSpinner },
   data() {
     return {
       isLoading: false,

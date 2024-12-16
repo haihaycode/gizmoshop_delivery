@@ -36,7 +36,7 @@
           :class="{
             'bx bxs-truck bx-tada bx-rotate-180':
               order.orderStatus.id === 15 || order.orderStatus.id === 29, // Đã nhận, chờ giao
-            'bx bx-check-circle':
+            'bx bx-user-check':
               order.orderStatus.id === 13 || order.orderStatus.id === 20, // Hoàn thành
             'bx bx-x-circle':
               order.orderStatus.id === 4 || !order.orderStatus.id, // Đã hủy hoặc không có id

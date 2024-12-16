@@ -1,17 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex justify-center items-center z-50 bg-opacity-20 bg-gray-800"
-    >
-      <div
-        class="absolute animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-green-500"
-      ></div>
-      <img
-        src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
-        class="rounded-full h-20 w-20 opacity-80"
-      />
-    </div>
+    <loading-spinner v-if="isLoading" />
 
     <div class="p-4 bg-gray-100 min-h-screen" v-if="!isModalOrderDetailView">
       <h2 class="text-2xl font-bold text-gray-800 text-center">
@@ -61,6 +50,7 @@ import cancelOrder from "@/components/home/cancelOrder.vue";
 import PaginationV2Vue from "@/components/containers/pagination/PaginationV2.vue";
 import { getOrdersforShipper } from "@/api/deliveryApi";
 import deliveryDetailVue from "@/view/deliveryDetail.vue";
+import LoadingSpinner from "@/components/containers/loading/LoadingShipper.vue";
 
 export default {
   components: {
@@ -69,6 +59,7 @@ export default {
     cancelOrder,
     deliveryDetailVue,
     PaginationV2Vue,
+    LoadingSpinner,
   },
   data() {
     return {
