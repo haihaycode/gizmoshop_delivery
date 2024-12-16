@@ -9,33 +9,22 @@
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-4 space-y-4">
       <!-- Trang chủ -->
-      <a href="/" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" :class="{
-        'bg-green-100 text-green-700 font-semibold': currentRoute === '/home',
-        'text-gray-600 hover:bg-green-100': currentRoute !== '/home',
-      }">
+      <router-link to="/your_delivery" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" active-class="bg-green-100 text-green-700 font-semibold">
         <i class="bx bx-home-alt text-xl mr-2"></i>
         <span>Trang chủ</span>
-      </a>
+      </router-link>
 
       <!-- Thông tin cá nhân -->
-      <a href="/profile" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" :class="{
-        'bg-green-100 text-green-700 font-semibold':
-          currentRoute === '/profile',
-        'text-gray-600 hover:bg-green-100': currentRoute !== '/profile',
-      }">
+      <router-link to="/profile" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" active-class="bg-green-100 text-green-700 font-semibold">
         <i class="bx bx-user-circle text-xl mr-2"></i>
         <span>Tài khoản</span>
-      </a>
+      </router-link>
 
-      <!-- Thông tin cá nhân -->
-      <a href="/" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" :class="{
-        'bg-green-100 text-green-700 font-semibold':
-          currentRoute === '/profile',
-        'text-gray-600 hover:bg-green-100': currentRoute !== '/profile',
-      }">
+      <!-- Đơn hàng hôm nay -->
+      <router-link to="/your_delivery" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" active-class="bg-green-100 text-green-700 font-semibold">
         <i class="bx bxs-truck text-xl mr-2"></i>
         <span>Đơn hàng hôm nay</span>
-      </a>
+      </router-link>
 
       <!-- Đơn hàng -->
       <div class="group">
@@ -48,44 +37,30 @@
           <i class="bx bx-chevron-down transform group-hover:rotate-180 transition-transform duration-200"></i>
         </a>
         <div class="hidden group-hover:block ml-6 mt-2 space-y-2">
-          <a href="/list" class="block px-4 py-2 rounded-lg transition-colors duration-200" :class="{
-            'bg-green-100 text-green-700 font-semibold':
-              currentRoute === '/supplier-pending-orders',
-            'text-gray-600 hover:bg-green-100':
-              currentRoute !== '/supplier-pending-orders',
-          }">
+          <router-link to="/list" class="block px-4 py-2 rounded-lg transition-colors duration-200" active-class="bg-green-100 text-green-700 font-semibold">
             Đơn hàng khách hàng
-          </a>
-          <a href="/supplier-list" class="block px-4 py-2 rounded-lg transition-colors duration-200" :class="{
-            'bg-green-100 text-green-700 font-semibold':
-              currentRoute === '/supplier-delivering-orders',
-            'text-gray-600 hover:bg-green-100':
-              currentRoute !== '/supplier-delivering-orders',
-          }">
+          </router-link>
+          <router-link to="/supplier-list" class="block px-4 py-2 rounded-lg transition-colors duration-200" active-class="bg-green-100 text-green-700 font-semibold">
             Đơn hàng nhà cung cấp
-          </a>
+          </router-link>
         </div>
       </div>
 
       <!-- Lịch sử -->
-      <a href="/history" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" :class="{
-        'bg-green-100 text-green-700 font-semibold':
-          currentRoute === '/history',
-        'text-gray-600 hover:bg-green-100': currentRoute !== '/history',
-      }">
+      <router-link to="/history" class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200" active-class="bg-green-100 text-green-700 font-semibold">
         <i class="bx bx-history text-xl mr-2"></i>
         <span>Lịch sử</span>
-      </a>
+      </router-link>
 
       <!-- Logout -->
-      <a class="flex items-center px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors duration-200">
+      <a class="flex items-center px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors duration-200" @click="logout">
         <i class="bx bx-log-out text-xl mr-2"></i>
-        <span @click="logout">Đăng xuất</span>
-
+        <span>Đăng xuất</span>
       </a>
     </nav>
   </aside>
 </template>
+
 
 <script>
 import { mapActions } from 'vuex';

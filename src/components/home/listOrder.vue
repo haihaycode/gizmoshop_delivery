@@ -59,7 +59,11 @@
           <strong>Khách hàng:</strong> {{ order.account.fullname }}
         </p>
         <p class="text-sm text-gray-600 truncate">
-          <strong>Địa chỉ:</strong> {{ order.addressAccount.specificAddress }}
+          <strong>Địa chỉ:</strong>   {{
+            order.addressAccount
+              ? `${order.addressAccount.specificAddress}, ${order.addressAccount.district}, ${order.addressAccount.city}`
+              : "Không có địa chỉ"
+          }}
         </p>
         <p class="text-sm mt-2">
           <span class="font-medium mr-2">Tình trạng:</span>

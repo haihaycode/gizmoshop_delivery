@@ -35,7 +35,11 @@
               >
             </div>
             <p class="text-lg text-gray-600">
-              {{ order.addressAccount.specificAddress }}
+              {{
+                order.addressAccount
+                  ? `${order.addressAccount.specificAddress}, ${order.addressAccount.district}, ${order.addressAccount.city}`
+                  : "Không có địa chỉ"
+              }}
             </p>
           </div>
         </div>
@@ -154,6 +158,7 @@ export default {
 
   data() {
     return {
+      isLoading: false,
       copied: false,
       orderCode: null,
       defaultAvatar: "https://via.placeholder.com/150", // Avatar mặc định

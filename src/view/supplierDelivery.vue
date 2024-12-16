@@ -1,39 +1,53 @@
 <template>
   <div class="p-6 bg-gray-100 min-h-screen">
-    <div v-if="isLoading"
-      class="fixed inset-0 flex flex-col justify-center items-center z-50 bg-opacity-20 bg-gray-500">
-      <!-- Spinner với hình ảnh bên trong -->
-      <div class="relative flex items-center justify-center">
-        <!-- Vòng tròn xoay -->
-        <div class="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-green-500"></div>
-        <!-- Ảnh GIF nằm bên trong -->
-        <img src="https://i.pinimg.com/originals/15/e3/2c/15e32ccaf19324a19f6f32f2280ed771.gif"
-          class="absolute rounded-full h-20 w-20" />
-      </div>
-      <!-- Dòng chữ -->
-      <p class="text-white text-lg font-semibold mt-10">
-        Đang tải
-        <span class="dots"></span>
-      </p>
-    </div>
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+    <loading-spinner v-if="isLoading" />
+    <h2 class="text-2xl font-bold text-gray-800 mb-3 text-center">
       Danh sách đơn hàng của nhà cung cấp
     </h2>
-
+    <div class="mb-4 flex justify-end">
+      <label for="limit" class="text-gray-700 mr-2">Số lượng mỗi trang:</label>
+      <select
+        id="limit"
+        v-model="limit"
+        @change="updateLimit"
+        class="border border-gray-300 rounded px-3 py-1"
+      >
+        <option v-for="option in limitOptions" :key="option" :value="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
     <!-- Component danh sách đơn hàng -->
-    <ListDelivery :orders="orders" :selectedOrders="selectedOrders" @update:selectedOrders="selectedOrders = $event"
-      @view-details="viewOrderDetails" />
-    <!-- Nút giao hàng -->
+    <ListDelivery
+      :orders="orders"
+      :selectedOrders="selectedOrders"
+      @update:selectedOrders="selectedOrders = $event"
+      @view-details="viewOrderDetails"
+    />
+
+    <PaginationV2Vue
+      :currentPage="page"
+      :totalPages="totalPages"
+      @change-page="changePage"
+    />
     <!-- Nút giao hàng -->
     <div class="mt-6 text-center">
-      <button @click="markAsDelivered" :disabled="selectedOrders.length === 0" :class="{
-        'bg-green-500': selectedOrders.length > 0,
-        'hover:bg-green-600': selectedOrders.length > 0,
-        'cursor-pointer': selectedOrders.length > 0,
-        'bg-gray-300': selectedOrders.length === 0,
-        'cursor-not-allowed': selectedOrders.length === 0,
-      }" class="px-6 py-3 text-white rounded-lg transition text-xs sm:text-sm">
-        Giao hàng cho các đơn đã chọn
+      <button
+        @click="markAsDelivered"
+        :disabled="selectedOrders.length === 0"
+        :class="{
+          'bg-green-500': selectedOrders.length > 0,
+          'hover:bg-green-600': selectedOrders.length > 0,
+          'cursor-pointer': selectedOrders.length > 0,
+          'bg-gray-300': selectedOrders.length === 0,
+          'cursor-not-allowed': selectedOrders.length === 0,
+        }"
+        class="px-6 py-3 text-white rounded-lg transition text-xs sm:text-sm"
+      >
+        <span v-if="isLoading">
+          <i class="bx bx-loader bx-spin text-lg"></i> Đang giao hàng...
+        </span>
+        <span v-else> Giao hàng cho các đơn đã chọn </span>
       </button>
     </div>
 
@@ -46,11 +60,15 @@
 import ListDelivery from "@/components/delivery/listDelivery.vue";
 import OrderModal from "@/components/delivery/detailDelivery.vue";
 import { getOrders, ReceiveAnOrder } from "@/api/deliveryApi";
-
+import PaginationV2Vue from "@/components/containers/pagination/PaginationV2.vue";
+import LoadingSpinner from "@/components/containers/loading/LoadingShipper.vue";
+import notificationService from "@/services/notificationService";
 export default {
   components: {
     ListDelivery,
     OrderModal,
+    PaginationV2Vue,
+    LoadingSpinner,
   },
   data() {
     return {
@@ -59,21 +77,41 @@ export default {
       selectedOrders: [],
       showModal: false,
       selectedOrder: null,
+      page: 0, // Trang hiện tại
+      limit: 5, // Số lượng đơn hàng mỗi trang
+      totalPages: 0,
+      limitOptions: [5, 10, 15, 20],
     };
   },
   methods: {
     async fetchOrders() {
       this.isLoading = true;
       try {
-        const response = await getOrders("ORDER_SUPPLIER");
-        this.orders = response.data.content;
-
-        console.log(this.orders)
+        const response = await getOrders({
+          type: "ORDER_SUPPLIER",
+          page: this.page,
+          limit: this.limit,
+        });
+        this.orders = response.data.content; // Danh sách đơn hàng
+        this.totalPages = response.data.totalPages; // Tổng số trang từ API
+        notificationService.success(
+          "Lấy đơn hàng thành công!!"
+        );
       } catch (error) {
         console.error("Lỗi khi lấy danh sách đơn hàng:", error);
       } finally {
         this.isLoading = false;
       }
+    },
+    changePage(newPage) {
+      if (newPage >= 0 && newPage < this.totalPages) {
+        this.page = newPage; // Cập nhật trang hiện tại
+        this.fetchOrders(); // Gọi API để lấy dữ liệu mới
+      }
+    },
+    updateLimit() {
+      this.page = 0; // Reset về trang đầu tiên
+      this.fetchOrders(); // Gọi lại API với limit mới
     },
     async ReceiveOrder(orderId) {
       this.isLoading = true;
@@ -95,9 +133,13 @@ export default {
           await this.ReceiveOrder(orderId);
         }
         await this.fetchOrders();
+        notificationService.success(
+          "Sản phẩm đã được chuyển đến danh sách giao!!"
+        );
       } catch (error) {
-        console.error("Lỗi khi giao đơn hàng:", error);
-        alert("Có lỗi xảy ra khi giao hàng. Vui lòng thử lại.");
+        notificationService.error(
+          "Có lỗi xảy ra khi giao hàng. Vui lòng thử lại!!"
+        );
       } finally {
         this.isLoading = false;
         this.selectedOrders = []; // Xóa danh sách đơn hàng đã chọn

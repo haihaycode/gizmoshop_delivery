@@ -38,6 +38,16 @@
           >
             {{ infoAccount.roles.join(", ") }}
           </p>
+          <p
+            class="text-sm text-gray-500 group-hover:text-green-500 transition-colors duration-300"
+          >
+            Phạm vi:
+            {{
+              infoAccount.extraInfo
+                ? infoAccount.extraInfo
+                : "Không có thông tin thêm"
+            }}
+          </p>
         </div>
       </div>
 
@@ -75,7 +85,7 @@
             <input
               type="text"
               :value="infoAccount?.email"
-              class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
+              class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 disabled"
               disabled
             />
           </div>
@@ -164,6 +174,7 @@ export default {
         sdt: "",
         birthday: "",
         extraInfo: "",
+
         roles: [""],
         createAt: "",
         image: require("@/assets/image/3red.svg"),
@@ -250,7 +261,7 @@ export default {
         this.$emit("update-success");
         this.showUpdateForm = false;
       } catch (error) {
-        this.message = error.message;
+        this.message = "Thông tin không hợp lệ";
         this.messageType = "error";
         this.NotificationModalIsOpen = true;
       }

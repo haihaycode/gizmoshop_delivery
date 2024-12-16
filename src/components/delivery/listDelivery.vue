@@ -10,7 +10,7 @@
     >
       <div class="flex-1">
         <h3 class="text-lg font-semibold text-gray-800">
-          Mã đơn: {{ order.id }}
+          Mã đơn: {{ order.orderCode }}
         </h3>
         <p class="text-sm text-gray-600">
           <strong>Khách hàng:</strong>
@@ -20,7 +20,7 @@
           <strong>Địa chỉ:</strong>
           {{
             order.addressAccount
-              ? order.addressAccount.specificAddress
+              ? `${order.addressAccount.specificAddress}, ${order.addressAccount.district}, ${order.addressAccount.city}`
               : "Không có địa chỉ"
           }}
         </p>

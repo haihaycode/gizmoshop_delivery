@@ -2,9 +2,9 @@
   <transition name="fade">
     <div
       v-if="order"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 \"
     >
-      <div class="bg-white w-11/12 max-w-lg rounded-lg shadow-lg p-6 relative">
+      <div class="bg-white w-11/12 max-w-lg  max-h-[600px] rounded-lg shadow-lg p-6 relative overflow-y-auto">
         <button
           class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
           @click="$emit('closeDetail')"

@@ -50,14 +50,7 @@
           </button>
         </form>
 
-        <div class="mt-6 text-center">
-          <a
-            href="/forgotpassword"
-            class="text-sm text-green-600 hover:underline"
-          >
-            Quên mật khẩu?
-          </a>
-        </div>
+       
       </div>
     </div>
 
@@ -75,13 +68,13 @@
         <p class="text-sm">
           Tham gia ngay để trở thành một phần của chúng tôi!
         </p>
-        <router-link to="/signup">
+       
           <button
             class="py-3 px-8 bg-white mt-3 text-green-600 font-bold rounded-full hover:bg-gray-100 transition duration-200"
           >
-            Đăng ký ngay
+            0896881029
           </button>
-        </router-link>
+       
       </div>
     </div>
     <NotificationModal
@@ -137,7 +130,7 @@ export default {
         console.log("Modal state:", this.isModalOpen);
         if (isAdmin) {
           setTimeout(() => {
-            this.$router.push("/");
+            this.$router.push("/list");
           }, 1000);
         }
       } catch (error) {

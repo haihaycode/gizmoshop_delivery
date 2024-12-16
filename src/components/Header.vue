@@ -7,7 +7,13 @@
         class="container mx-auto flex items-center justify-between py-4 px-6"
       >
         <!-- Logo/Title -->
-        <h1 class="text-2xl font-mono">GizmoShop - Nhân viên giao hàng</h1>
+        <h1 class="text-2xl font-mono">
+          <!-- Văn bản rút gọn cho điện thoại -->
+          <span class="block lg:hidden">GizmoShop </span>
+
+          <!-- Văn bản đầy đủ cho desktop -->
+          <span class="hidden lg:block">GizmoShop - Nhân viên giao hàng</span>
+        </h1>
 
         <!-- Mobile Menu Button -->
         <button
@@ -80,22 +86,21 @@
 
     <nav
       class="fixed inset-x-0 bottom-0 bg-white border-t shadow-lg md:hidden flex justify-around py-3 items-center"
+      style="z-index: 9999"
     >
       <div
         class="fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-between px-4 py-3 md:max-w-lg md:mx-auto items-center rounded-t-lg"
-        style="z-index: 1000"
       >
         <!-- Home Icon -->
-        <router-link to="/">
+        <router-link to="/your_delivery">
           <button
             class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
           >
             <i class="bx bx-home text-2xl md:text-3xl hover:text-green-600"></i>
           </button>
         </router-link>
-
-        <!-- Orders Icon -->
-        <router-link to="/list">
+        <div class="relative group">
+          <!-- Nút chính -->
           <button
             class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
           >
@@ -103,7 +108,25 @@
               class="bx bx-package text-2xl md:text-3xl hover:text-green-600"
             ></i>
           </button>
-        </router-link>
+
+          <!-- Menu xuất hiện khi hover -->
+          <div
+            class="absolute bottom-full left-0 mb-2 bg-white shadow-lg rounded-lg py-2 w-40 opacity-0 group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
+          >
+            <router-link
+              to="/list"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-green-600"
+            >
+              Danh sách
+            </router-link>
+            <router-link
+              to="/supplier-list"
+              class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-green-600"
+            >
+              Nhà cung cấp
+            </router-link>
+          </div>
+        </div>
 
         <!-- Transaction History Icon -->
         <router-link to="/history">
@@ -124,13 +147,14 @@
             <i class="bx bx-user text-2xl md:text-3xl hover:text-green-600"></i>
           </button>
         </router-link>
+
         <!-- Logout Icon -->
         <button
-          class="icon w-12 h-12 flex items-center justify-center transition-all duration-200 hover:bg-gray-100"
+          class="flex items-center px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors duration-200"
+          @click="logout"
         >
-          <i
-            class="bx bx-log-out text-2xl md:text-3xl hover:text-green-600"
-          ></i>
+          <i class="bx bx-log-out text-2xl md:text-3xl  mr-2"></i>
+         
         </button>
       </div>
     </nav>

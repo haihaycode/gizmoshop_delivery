@@ -29,7 +29,7 @@
         <label class="block text-sm font-medium text-gray-700">Email</label>
         <input
           v-model="infoAccount.email"
-          type="email"
+          disabled
           class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <p v-if="errors.email" class="text-red-500 text-sm">

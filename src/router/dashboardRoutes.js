@@ -10,7 +10,7 @@ const dashboardRoutes = [
         children: [
 
             {
-                path: '',
+                path: '/your_delivery',
                 meta: {
                     title: "Giao hàng",
                     description: "GizmoShop"
