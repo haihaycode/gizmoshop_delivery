@@ -10,6 +10,26 @@
         <span class="text-green-500 font-semibold">Xanh</span> người dùng,
         <span class="text-yellow-500 font-semibold">Vàng</span> nhà cung cấp.
       </p>
+      <div
+        class="filters mb-4 flex flex-wrap gap-2 items-center justify-center"
+      >
+        <!-- Chú thích cho ô tìm kiếm -->
+        <div class="w-full md:w-auto text-center">
+          <label
+            for="searchInput"
+            class="block text-sm font-medium text-gray-700"
+          >
+            🔍 Tìm kiếm theo mã đơn hàng:
+          </label>
+          <input
+            id="searchInput"
+            type="text"
+            class="border rounded px-2 py-1 w-full md:w-auto"
+            v-model="searchKeyword"
+            placeholder="Nhập mã đơn hàng..."
+            @input="fetchOrders"
+          />
+        </div>
           <div class="filters mb-6 flex flex-wrap gap-4 justify-center">
         <!-- Chú thích cho ô tìm kiếm -->
         <div class="w-full sm:w-1/2 md:w-1/3 text-center">
@@ -26,6 +46,27 @@
           />
         </div>
 
+        <!-- Chú thích cho dropdown sắp xếp -->
+        <div class="w-full md:w-auto text-center">
+          <label
+            for="sortSelect"
+            class="block text-sm font-medium text-gray-700"
+          >
+            📋 Sắp xếp theo:
+          </label>
+          <select
+            id="sortSelect"
+            v-model="sortOrder"
+            @change="fetchOrders"
+            class="border rounded px-2 py-1 w-full md:w-auto"
+          >
+            <option value="id,DESC">ID - Mới nhất</option>
+            <option value="id,ASC">ID - Cũ nhất</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Danh sách đơn hàng -->
         <!-- Chú thích cho dropdown sắp xếp -->
         <div class="w-full sm:w-1/2 md:w-1/3 text-center">
           <label for="sortSelect" class="block text-sm font-medium text-gray-700 mb-2">
@@ -88,9 +129,10 @@ export default {
     return {
       isLoading: false,
       isModalOrderDetailView: false,
+      orderDetailSelected: null,
+      getOrdersforShipper,
       orders: [],
       selectedOrder: null,
-      orderDetailSelected: null,
       page: 0, // Trang hiện tại
       limit: 5, // Số mục trên mỗi trang
       totalPages: 0, // Tổng số trang

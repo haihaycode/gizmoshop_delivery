@@ -92,7 +92,7 @@ export default {
         this.orders = response.data.content; // Danh sách đơn hàng
         this.totalPages = response.data.totalPages; // Tổng số trang từ API
       } catch (error) {
-        notificationService.success("Lỗi khi lấy danh sách đơn hàng!!");
+        console.error("Lỗi khi lấy danh sách đơn hàng:", error);
       } finally {
         this.isLoading = false;
       }

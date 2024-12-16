@@ -15,14 +15,28 @@
       <!-- Component ListOrder -->
       <listOrder :orders="orders" @selectOrder="selectOrder"></listOrder>
 
-      <orderDetail v-if="selectedOrder" :order="selectedOrder" @closeDetail="closeDetail"
-        @confirmDelivery="confirmDelivery" @openCancelForm="openCancelForm"></orderDetail>
+      <orderDetail
+        v-if="selectedOrder"
+        :order="selectedOrder"
+        @closeDetail="closeDetail"
+        @confirmDelivery="confirmDelivery"
+        @openCancelForm="openCancelForm"
+      ></orderDetail>
 
-      <cancelOrder v-if="showCancelForm" :selectedOrder="selectedOrder" :showCancelForm="showCancelForm"
-        @closeCancelForm="closeCancelForm" @cancelOrder="processCancelOrder" />
+      <cancelOrder
+        v-if="showCancelForm"
+        :selectedOrder="selectedOrder"
+        :showCancelForm="showCancelForm"
+        @closeCancelForm="closeCancelForm"
+        @cancelOrder="processCancelOrder"
+      />
 
       <!-- Component phân trang -->
-      <PaginationV2Vue :currentPage="page" :totalPages="totalPages" @change-page="changePage" />
+      <PaginationV2Vue
+        :currentPage="page"
+        :totalPages="totalPages"
+        @change-page="changePage"
+      />
     </div>
     <div v-else>
       <deliveryDetailVue :order="orderDetailSelected" />
@@ -45,7 +59,7 @@ export default {
     cancelOrder,
     deliveryDetailVue,
     PaginationV2Vue,
-    LoadingSpinner
+    LoadingSpinner,
   },
   data() {
     return {
@@ -63,20 +77,16 @@ export default {
     };
   },
   methods: {
-  async fetchOrders() {
+    async fetchOrders() {
       this.isLoading = true;
       try {
         const response = await getOrdersforShipper(
           "DA_NHAN",
           this.page,
-          this.limit,
-          this.searchKeyword,
-          this.startDate,
-          this.endDate,
-          this.sortOrder
+          this.limit
         );
         this.orders = response.data.content;
-        this.totalPages = response.data.totalPages;
+        this.totalPages = response.data.totalPages; // Cập nhật tổng số trang
       } catch (error) {
         console.error("Lỗi khi lấy danh sách đơn hàng:", error);
       } finally {
