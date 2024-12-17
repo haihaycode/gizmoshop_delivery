@@ -1,11 +1,8 @@
 <template>
-  <div class="flex items-center justify-center mt-6 space-x-4">
+  <div class="flex items-center justify-center mt-6 space-x-4" v-if="totalPages > 1">
     <!-- Nút trước -->
-    <button
-      @click="$emit('change-page', currentPage - 1)"
-      :disabled="currentPage <= 0"
-      class="flex items-center px-4 py-2 bg-green-500 text-white font-medium rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
-    >
+    <button @click="$emit('change-page', currentPage - 1)" :disabled="currentPage <= 0"
+      class="flex items-center px-4 py-2 bg-green-500 text-white font-medium rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
       <i class="bx bx-chevron-left text-xl"></i>
     </button>
 
@@ -15,11 +12,8 @@
     </div>
 
     <!-- Nút tiếp -->
-    <button
-      @click="$emit('change-page', currentPage + 1)"
-      :disabled="currentPage >= totalPages - 1"
-      class="flex items-center px-4 py-2 bg-green-500 text-white font-medium rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
-    >
+    <button @click="$emit('change-page', currentPage + 1)" :disabled="currentPage >= totalPages - 1"
+      class="flex items-center px-4 py-2 bg-green-500 text-white font-medium rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
       <i class="bx bx-chevron-right text-xl"></i>
     </button>
   </div>

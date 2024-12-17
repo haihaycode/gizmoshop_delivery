@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-screen bg-gray-50 p-6 flex flex-col space-y-2">
+  <div class="min-h-screen  p-2 flex flex-col space-y-2">
     <!-- Tiêu đề -->
-    <h2 class="text-center text-2xl font-semibold text-gray-800 mb-2">
-      Chi tiết đơn hàng
+    <h2 class="text-2xl font-bold text-gray-800 mb-3 text-start border-l-4 border-green-500">
+      &nbsp; CHI TIẾT ĐƠN HÀNG
     </h2>
 
     <!-- Thông tin khách hàng và giao hàng -->
@@ -13,31 +13,25 @@
           Thông tin khách hàng
         </h3>
         <div class="flex items-center space-x-4 mb-4">
-          <img
-            src="https://i.pinimg.com/736x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg"
-            alt="Avatar"
-            class="w-16 h-16 rounded-full border-2 border-gray-300"
-          />
+          <img src="https://i.pinimg.com/736x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg" alt="Avatar"
+            class="w-16 h-16 rounded-full border-2 border-gray-300" />
           <div>
             <p class="text-lg font-semibold text-gray-800">
               {{ order.addressAccount.fullname }}
             </p>
             <div class="flex items-center space-x-2">
-              <div
-                @click="copyPhoneNumber"
-                class="flex items-center space-x-2 p-2 bg-green-100 text-green-600 rounded-lg cursor-pointer border border-green-200 hover:bg-green-200 transition"
-              >
+              <div @click="copyPhoneNumber"
+                class="flex items-center space-x-2 p-2 bg-green-100 text-green-600 rounded-lg cursor-pointer border border-green-200 hover:bg-green-200 transition">
                 <i class="bx bx-copy"></i>
                 <p class="text-sm">{{ order.addressAccount.sdt }}</p>
               </div>
-              <span v-if="copied" class="text-sm text-green-500 ml-2"
-                >Đã sao chép!</span
-              >
+              <span v-if="copied" class="text-sm text-green-500 ml-2">Đã sao chép!</span>
             </div>
             <p class="text-lg text-gray-600">
               {{
                 order.addressAccount
-                  ? `${order.addressAccount.specificAddress}, ${order.addressAccount.district}, ${order.addressAccount.city}`
+                  ? `${order.addressAccount.specificAddress}, ${order.addressAccount.district},
+              ${order.addressAccount.city}`
                   : "Không có địa chỉ"
               }}
             </p>
@@ -75,27 +69,32 @@
       <h3 class="text-2xl font-semibold text-gray-800 mb-4">
         Chi tiết sản phẩm
       </h3>
-      <div
-        v-for="(detail, index) in order.orderDetails"
-        :key="index"
-        class="flex flex-col sm:flex-row items-center justify-between mb-6 border-b pb-4"
-      >
+      <div v-for="(detail, index) in order.orderDetails" :key="index"
+        class="flex flex-col sm:flex-row items-center justify-between mb-6 border-b pb-4">
         <div class="flex sm:items-center space-x-4 w-full">
-          <img
-            :src="
-              detail.product.thumbnail
-                ? loadImage(detail.product.thumbnail, 'product')
-                : 'https://i.pinimg.com/736x/01/7c/44/017c44c97a38c1c4999681e28c39271d.jpg'
-            "
-            alt="Product Thumbnail"
-            class="w-24 h-24 object-contain rounded-lg"
-          />
+          <img :src="detail.product.thumbnail
+            ? loadImage(detail.product.thumbnail, 'product')
+            : 'https://i.pinimg.com/736x/01/7c/44/017c44c97a38c1c4999681e28c39271d.jpg'
+            " alt="Product Thumbnail" class="w-24 h-24 object-contain rounded-lg" />
           <div class="flex-1">
             <p class="text-lg font-semibold text-gray-800">
-              {{ detail.product.productName }}
+              #MSP{{ detail.product.id }}&nbsp;
+              <br>
+              Tên sản phẩm : {{ detail.product.productName }}
+              <br>
+              <span class="text-yellow-500 font-mono">
+                {{ detail.product.productStatusResponse.id === 2 ? 'Sản phẩm bị ẩn' :
+                  detail.product.productStatusResponse.id === 3 ? 'Sản phẩm bị hủy' : '' }}
+              </span>
             </p>
             <p class="text-sm text-gray-600">
               Trọng lượng: {{ detail.product.productWeight }}g
+            </p>
+            <p class="text-sm text-gray-600">
+              Kho : {{ detail.product?.productInventoryResponse?.inventory?.inventoryName + '-' || '' }}
+              {{ detail.product?.productInventoryResponse?.inventory?.commune + '-' || '' }}
+              {{ detail.product?.productInventoryResponse?.inventory?.district + ' -' || '' }}
+              {{ detail.product?.productInventoryResponse?.inventory?.city || '' }}
             </p>
           </div>
         </div>
@@ -107,10 +106,7 @@
                 {{ formatCurrency(detail.product.productPrice) }}
               </p>
             </div>
-            <div
-              v-if="detail.product.discountProduct > 0"
-              class="flex items-center space-x-2"
-            >
+            <div v-if="detail.product.discountProduct > 0" class="flex items-center space-x-2">
               <span class="text-red-500 font-medium">
                 {{ detail.product.discountProduct }}%
               </span>
@@ -131,11 +127,8 @@
       </div>
     </div>
 
-    <button
-      @click="ReceiveOrder(order.id)"
-      :disabled="isLoading"
-      class="w-full py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition mt-4"
-    >
+    <button @click="ReceiveOrder(order.id)" :disabled="isLoading"
+      class="w-full py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition mt-4">
       <span v-if="isLoading">Đang xác nhận...</span>
       <span v-else> Xác nhận giao hàng thành công </span>
     </button>

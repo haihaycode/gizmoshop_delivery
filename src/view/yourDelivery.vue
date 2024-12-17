@@ -2,41 +2,27 @@
   <div>
     <loading-spinner v-if="isLoading" />
 
-    <div class="p-4 bg-gray-100 min-h-screen" v-if="!isModalOrderDetailView">
-      <h2 class="text-2xl font-bold text-gray-800 text-center">
-        Danh sách đơn hàng
+    <div class="p-2 min-h-screen" v-if="!isModalOrderDetailView">
+      <h2 class="text-2xl font-bold text-gray-800 mb-3 text-start border-l-4 border-green-500">
+        &nbsp; ĐƠN HÀNG ĐÃ NHẬN
       </h2>
-      <p class="text-sm text-gray-600 text-center mb-2">
+      <p class="text-sm text-gray-600 text-center mb-2" v-if="!isLoading && orders.length > 0">
         <span class="text-green-500 font-semibold">Xanh</span>
-        người dùng, <span class="text-yellow-500 font-semibold">Vàng</span> nhà
+        người dùng , <span class="text-yellow-500 font-semibold">Vàng</span> nhà
         cung cấp.
       </p>
 
       <!-- Component ListOrder -->
       <listOrder :orders="orders" @selectOrder="selectOrder"></listOrder>
 
-      <orderDetail
-        v-if="selectedOrder"
-        :order="selectedOrder"
-        @closeDetail="closeDetail"
-        @confirmDelivery="confirmDelivery"
-        @openCancelForm="openCancelForm"
-      ></orderDetail>
+      <orderDetail v-if="selectedOrder" :order="selectedOrder" @closeDetail="closeDetail"
+        @confirmDelivery="confirmDelivery" @openCancelForm="openCancelForm"></orderDetail>
 
-      <cancelOrder
-        v-if="showCancelForm"
-        :selectedOrder="selectedOrder"
-        :showCancelForm="showCancelForm"
-        @closeCancelForm="closeCancelForm"
-        @cancelOrder="processCancelOrder"
-      />
+      <cancelOrder v-if="showCancelForm" :selectedOrder="selectedOrder" :showCancelForm="showCancelForm"
+        @closeCancelForm="closeCancelForm" @cancelOrder="processCancelOrder" />
 
       <!-- Component phân trang -->
-      <PaginationV2Vue
-        :currentPage="page"
-        :totalPages="totalPages"
-        @change-page="changePage"
-      />
+      <PaginationV2Vue :currentPage="page" :totalPages="totalPages" @change-page="changePage" />
     </div>
     <div v-else>
       <deliveryDetailVue :order="orderDetailSelected" />

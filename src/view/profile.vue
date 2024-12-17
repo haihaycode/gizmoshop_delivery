@@ -1,46 +1,35 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="min-h-screen bg-gray-100 p-6 flex flex-col space-y-8">
+  <div class="min-h-screen  p-2 flex flex-col space-y-8">
     <!-- Tiêu đề -->
-    <h2 class="text-2xl font-semibold text-gray-800 text-center">
-      Thông tin tài khoản
+    <h2 class="text-2xl font-bold text-gray-800 mb-3 text-start border-l-4 border-green-500">
+      &nbsp; HỒ SƠ CÁ NHÂN
     </h2>
     <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-8">
       <!-- Box chứa Avatar -->
-      <div
-        class="flex justify-center items-center bg-white border py-8 px-5 rounded-lg w-full lg:w-4/12"
-      >
+      <div class="flex justify-center items-center bg-white border py-8 px-5 rounded-lg w-full lg:w-4/12">
         <div class="text-center">
           <!-- Avatar -->
           <div>
             <!-- Avatar Image -->
             <div
-              class="relative w-32 h-32 mx-auto rounded-full border-4 border-gray-300 overflow-hidden group cursor-pointer"
-            >
-              <img
-                src="https://i.pinimg.com/736x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg"
-                alt="Avatar"
-                class="w-full h-full object-cover rounded-full transition-transform duration-300 ease-in-out group-hover:scale-110"
-              />
+              class="relative w-32 h-32 mx-auto rounded-full border-4 border-gray-300 overflow-hidden group cursor-pointer">
+              <img src="https://i.pinimg.com/736x/9e/83/75/9e837528f01cf3f42119c5aeeed1b336.jpg" alt="Avatar"
+                class="w-full h-full object-cover rounded-full transition-transform duration-300 ease-in-out group-hover:scale-110" />
               <div
-                class="absolute inset-0 rounded-full border-4 border-green-300 group-hover:border-green-500 transition-colors duration-300 ease-in-out"
-              ></div>
+                class="absolute inset-0 rounded-full border-4 border-green-300 group-hover:border-green-500 transition-colors duration-300 ease-in-out">
+              </div>
             </div>
           </div>
           <p
-            class="text-xl font-semibold text-gray-800 mt-4 transition-colors duration-300 ease-in-out group-hover:text-green-600"
-          >
+            class="text-xl font-semibold text-gray-800 mt-4 transition-colors duration-300 ease-in-out group-hover:text-green-600">
             {{ infoAccount.fullname || "Đang tải ...." }}
           </p>
 
-          <p
-            class="text-sm text-gray-500 group-hover:text-green-500 transition-colors duration-300"
-          >
+          <p class="text-sm text-gray-500 group-hover:text-green-500 transition-colors duration-300">
             {{ infoAccount.roles.join(", ") }}
           </p>
-          <p
-            class="text-sm text-gray-500 group-hover:text-green-500 transition-colors duration-300"
-          >
+          <p class="text-sm text-gray-500 group-hover:text-green-500 transition-colors duration-300">
             Phạm vi:
             {{
               infoAccount.extraInfo
@@ -48,22 +37,17 @@
                 : "Không có thông tin thêm"
             }}
           </p>
-        </div> 
+        </div>
       </div>
 
-      <div
-        class="bg-white border w-full lg:w-8/12 py-8 px-6 lg:px-8 rounded-lg shadow-md"
-      >
+      <div class="bg-white border w-full lg:w-8/12 py-8 px-6 lg:px-8 rounded-lg shadow-md">
         <div class="space-y-6">
           <!-- Tuổi -->
           <div class="flex items-center space-x-4">
             <p class="text-sm font-medium text-gray-700 w-1/3">Tuổi:</p>
-            <input
-              type="text"
-              :value="age"
+            <input type="text" :value="age"
               class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
-              disabled
-            />
+              disabled />
           </div>
 
           <!-- Số điện thoại -->
@@ -71,23 +55,17 @@
             <p class="text-sm font-medium text-gray-700 w-1/3">
               Số điện thoại:
             </p>
-            <input
-              type="text"
-              :value="infoAccount?.sdt"
+            <input type="text" :value="infoAccount?.sdt"
               class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
-              disabled
-            />
+              disabled />
           </div>
 
           <!-- Địa chỉ -->
           <div class="flex items-center space-x-4">
             <p class="text-sm font-medium text-gray-700 w-1/3">Email:</p>
-            <input
-              type="text"
-              :value="infoAccount?.email"
+            <input type="text" :value="infoAccount?.email"
               class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 disabled"
-              disabled
-            />
+              disabled />
           </div>
 
           <!-- Ngày gia nhập -->
@@ -95,12 +73,9 @@
             <p class="text-sm font-medium text-gray-700 w-1/3">
               Ngày gia nhập:
             </p>
-            <input
-              type="text"
-              :value="daysSinceJoin + ' ngày trước'"
+            <input type="text" :value="daysSinceJoin + ' ngày trước'"
               class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
-              disabled
-            />
+              disabled />
           </div>
 
           <!-- Trạng thái tài khoản -->
@@ -108,20 +83,15 @@
             <p class="text-sm font-medium text-gray-700 w-1/3">
               Trạng thái tài khoản:
             </p>
-            <input
-              type="text"
-              :value="accountStatus"
+            <input type="text" :value="accountStatus"
               class="w-2/3 py-2 px-4 border-b-2 border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
-              disabled
-            />
+              disabled />
           </div>
 
           <!-- Nút Cập nhật thông tin -->
           <div class="flex justify-center mt-4">
-            <button
-              @click="openUpdateForm"
-              class="px-6 py-3 bg-green-600 text-center text-white rounded-md hover:bg-green-700"
-            >
+            <button @click="openUpdateForm"
+              class="px-6 py-3 bg-green-600 text-center text-white rounded-md hover:bg-green-700">
               Cập nhật thông tin
             </button>
           </div>
@@ -129,30 +99,18 @@
       </div>
     </div>
 
-    <div
-      v-if="showUpdateForm"
-      class="fixed inset-0 bg-gray-400 bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div class="bg-white rounded-lg w-full max-w-lg p-6">
+    <div v-if="showUpdateForm" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-sm w-full max-w-lg p-6">
         <h3 class="text-2xl font-semibold mb-4 text-center">
           Cập nhật thông tin
         </h3>
-        <UpdateForm
-          :infoAccount="infoAccount"
-          :errors="errors"
-          :closeUpdateForm="closeUpdateForm"
-          :validateForm="validateForm"
-        />
+        <UpdateForm :infoAccount="infoAccount" :errors="errors" :closeUpdateForm="closeUpdateForm"
+          :validateForm="validateForm" />
       </div>
     </div>
   </div>
-  <NotificationModal
-    :isOpen="NotificationModalIsOpen"
-    :message="message"
-    :type="messageType"
-    @close="NotificationModalIsOpen = false"
-    :title="'Thông báo'"
-  ></NotificationModal>
+  <NotificationModal :isOpen="NotificationModalIsOpen" :message="message" :type="messageType"
+    @close="NotificationModalIsOpen = false" :title="'Thông báo'"></NotificationModal>
 </template>
 
 <script>

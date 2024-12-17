@@ -8,7 +8,20 @@ const dashboardRoutes = [
         path: '/',
         component: admin,
         children: [
+            {
+                path: '/',
+                meta: {
+                    title: "Giao hàng",
+                    description: "GizmoShop"
+                },
+                components: {
+                    default: useComponent('yourDelivery'),
+                    header: Header,
+                    footer: Footer,
+                    SideBar: SideBar,
+                }
 
+            },
             {
                 path: '/your_delivery',
                 meta: {
