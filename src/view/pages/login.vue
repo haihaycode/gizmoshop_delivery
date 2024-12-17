@@ -130,7 +130,7 @@ export default {
         console.log("Modal state:", this.isModalOpen);
         if (isAdmin) {
           setTimeout(() => {
-            this.$router.push("/list");
+            this.$router.push("/your_delivery");
           }, 1000);
         }
       } catch (error) {
