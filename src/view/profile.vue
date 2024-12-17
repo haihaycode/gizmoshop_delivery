@@ -48,7 +48,7 @@
                 : "Không có thông tin thêm"
             }}
           </p>
-        </div>
+        </div> 
       </div>
 
       <div

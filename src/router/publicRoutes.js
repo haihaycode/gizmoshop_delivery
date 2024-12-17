@@ -13,7 +13,7 @@ const publicRoutes = [
                 name: 'login',
                 meta: {
                     title: "Gizmo",
-                    description: " Mô tả "
+                    description: " Login"
                 },
                 components: {
                     default: useComponent('login'),
