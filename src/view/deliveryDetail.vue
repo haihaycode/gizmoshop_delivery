@@ -1,5 +1,9 @@
 <template>
   <div class="min-h-screen  p-2 flex flex-col space-y-2">
+    <h2 class="text-xl font-bold text-gray-800 mb-1 text-start flex items-center cursor-pointer"
+      @click="$emit('back-step')">
+      <i class="bx bx-arrow-back"></i> &nbsp; Quay lại
+    </h2>
     <!-- Tiêu đề -->
     <h2 class="text-2xl font-bold text-gray-800 mb-3 text-start border-l-4 border-green-500">
       &nbsp; CHI TIẾT ĐƠN HÀNG

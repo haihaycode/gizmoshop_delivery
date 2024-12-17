@@ -25,7 +25,7 @@
       <PaginationV2Vue :currentPage="page" :totalPages="totalPages" @change-page="changePage" />
     </div>
     <div v-else>
-      <deliveryDetailVue :order="orderDetailSelected" />
+      <deliveryDetailVue :order="orderDetailSelected" @back-step="isModalOrderDetailView = false" />
     </div>
   </div>
 </template>
