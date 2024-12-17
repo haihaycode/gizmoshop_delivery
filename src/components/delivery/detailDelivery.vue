@@ -2,7 +2,7 @@
   <div v-if="order" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
     <div class="bg-white p-6 rounded-lg max-w-sm w-full shadow-lg">
       <h3 class="text-xl font-semibold text-gray-800">
-        Chi tiết đơn hàng: <span class="text-blue-500">{{ order.id }}</span>
+        Chi tiết đơn hàng: #MDH_<span class="text-blue-500">{{ order.id }}</span>
       </h3>
       <div class="mt-4 space-y-2">
         <p><strong>Khách hàng:</strong> {{ order.account.fullname }}</p>
@@ -20,7 +20,8 @@
         </p>
       </div>
       <div class="mt-6 text-right">
-        <button @click="$emit('close')" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-xs sm:text-sm">
+        <button @click="$emit('close')"
+          class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-xs sm:text-sm">
           Đóng
         </button>
       </div>

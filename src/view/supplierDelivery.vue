@@ -1,53 +1,35 @@
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen">
+  <div class="p-2 min-h-screen">
     <loading-spinner v-if="isLoading" />
-    <h2 class="text-2xl font-bold text-gray-800 mb-3 text-center">
-      Danh sách đơn hàng của nhà cung cấp
+    <h2 class="text-2xl font-bold text-gray-800 mb-3 text-start border-l-4 border-green-500">
+      &nbsp; DANH SÁCH ĐƠN HÀNG CỦA NHÀ CUNG CẤP
     </h2>
-    <div class="mb-4 flex justify-end">
+    <div class="mb-4 flex justify-end " v-if="orders.length > 0">
       <label for="limit" class="text-gray-700 mr-2">Số lượng mỗi trang:</label>
-      <select
-        id="limit"
-        v-model="limit"
-        @change="updateLimit"
-        class="border border-gray-300 rounded px-3 py-1"
-      >
+      <select id="limit" v-model="limit" @change="updateLimit" class="border border-gray-300 rounded px-3 py-1">
         <option v-for="option in limitOptions" :key="option" :value="option">
           {{ option }}
         </option>
       </select>
     </div>
     <!-- Component danh sách đơn hàng -->
-    <ListDelivery
-      :orders="orders"
-      :selectedOrders="selectedOrders"
-      @update:selectedOrders="selectedOrders = $event"
-      @view-details="viewOrderDetails"
-    />
+    <ListDelivery :orders="orders" :selectedOrders="selectedOrders" @update:selectedOrders="selectedOrders = $event"
+      @view-details="viewOrderDetails" />
 
-    <PaginationV2Vue
-      :currentPage="page"
-      :totalPages="totalPages"
-      @change-page="changePage"
-    />
+    <PaginationV2Vue :currentPage="page" :totalPages="totalPages" @change-page="changePage" />
     <!-- Nút giao hàng -->
-    <div class="mt-6 text-center">
-      <button
-        @click="markAsDelivered"
-        :disabled="selectedOrders.length === 0"
-        :class="{
-          'bg-green-500': selectedOrders.length > 0,
-          'hover:bg-green-600': selectedOrders.length > 0,
-          'cursor-pointer': selectedOrders.length > 0,
-          'bg-gray-300': selectedOrders.length === 0,
-          'cursor-not-allowed': selectedOrders.length === 0,
-        }"
-        class="px-6 py-3 text-white rounded-lg transition text-xs sm:text-sm"
-      >
+    <div class="mt-6 text-center" v-if="!isLoading && orders.length > 0">
+      <button @click="markAsDelivered" :disabled="selectedOrders.length === 0" :class="{
+        'bg-green-500': selectedOrders.length > 0,
+        'hover:bg-green-600': selectedOrders.length > 0,
+        'cursor-pointer': selectedOrders.length > 0,
+        'bg-gray-300': selectedOrders.length === 0,
+        'cursor-not-allowed': selectedOrders.length === 0,
+      }" class="px-6 py-3 text-white rounded-lg transition text-xs sm:text-sm">
         <span v-if="isLoading">
           <i class="bx bx-loader bx-spin text-lg"></i> Đang giao hàng...
         </span>
-        <span v-else> Giao hàng cho các đơn đã chọn </span>
+        <span v-if="!isLoading && orders.length > 0"> Giao hàng cho các đơn đã chọn </span>
       </button>
     </div>
 
